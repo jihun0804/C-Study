@@ -1,0 +1,41 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
+
+public class Gameflow : MonoBehaviour
+{
+    [Header("설정")]
+    public string MainMenu = "MainMenuScene";
+    public string GameScene = "GameScene";
+    public float introDelay = 5.0f;
+       
+    // Start is called before the first frame update
+    IEnumerator WaitMenu()
+    {
+        yield return new WaitForSeconds(introDelay);
+        SceneManager.LoadScene("MainMenuScene");
+    }
+    
+    
+    void Start()
+    {
+        if (SceneManager.GetActiveScene().name == "IntroScene")
+        {
+            StartCoroutine(WaitMenu());
+        }
+        
+    }
+    public void GameStrat()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
+    public void OpenRanking()
+    {
+        Debug.Log("Rainking");
+    }
+    public void GameQuit()
+    {
+        Application.Quit();
+        Debug.Log("게임종료");
+    }
+}
