@@ -1,34 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI; // UI를 제어하기 위해 반드시 추가!
 using UnityEngine.SceneManagement;
 
-public class PlayerHP : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
-    public float MAXHP = 100;
+    public float maxHp = 100f;
     public float currentHp;
 
+    [Header("UI 연결")]
+    public Slider hpSlider; // 유니티에서 만든 슬라이더를 여기에 연결할 거예요.
 
+    void Start()
+    {
+        currentHp = maxHp;
+
+        // 시작할 때 슬라이더의 최대값과 현재값을 초기화합니다.
+        if (hpSlider != null)
+        {
+            hpSlider.maxValue = maxHp;
+            hpSlider.value = currentHp;
+        }
+    }
 
     public void TakeDamage(float damage)
     {
         currentHp -= damage;
+        
+        // 피가 깎일 때마다 슬라이더의 눈금도 줄입니다.
+        if (hpSlider != null)
+        {
+            hpSlider.value = currentHp;
+        }
+
+        Debug.Log("현재 체력: " + currentHp);
 
         if (currentHp <= 0)
         {
-            die();
-
+            Die();
         }
     }
-    void die()
-    {
-        SceneManager.LoadScene("GameOver");
-    }
-    void Start()
-    {
-        currentHp = MAXHP;
-    
-    }
 
+    void Die()
+    {
+        SceneManager.LoadScene("MainMenuScene");
+    }
 }
