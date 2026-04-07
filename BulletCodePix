@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class bullet : MonoBehaviour
+{
+    public float damage = 20f;
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerHP playerHp = other.GetComponent<PlayerHP>();
+
+            if (playerHp != null)
+            {
+                playerHp.TakeDamage(damage);
+
+            }
+            Destroy(gameObject);
+        }
+    }
+    void Update()
+    {
+        
+    }
+}
